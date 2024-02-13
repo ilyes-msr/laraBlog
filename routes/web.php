@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -18,7 +19,9 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 */
 
 Route::get('/', function () {
-
+//    \Illuminate\Support\Facades\DB::listen(function($query) {
+//        logger($query->sql, $query->bindings);
+//    });
     // Way 01
 //    $posts = [];
 //    foreach ($files as $file)
@@ -48,7 +51,7 @@ Route::get('/', function () {
 //        ->map(fn($document) => new Post($document->title, $document->excerpt, $document->date, $document->body(), $document->slug));
 
     return view('posts', [
-        'posts' => Post::all()
+        'posts' => Post::with('category', 'author')->get()
     ]);
 });
 
@@ -60,7 +63,14 @@ Route::get('posts/{post:slug}', function (Post $post) {
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
-//        'posts' => Post::where('category_id', $category->id)->get()
         'posts' => $category->posts
+//        'posts' => $category->posts->load(['category', 'author'])
+    ]);
+});
+
+Route::get('authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'posts' => $author->posts
+//        'posts' => $author->posts->load(['category', 'author'])
     ]);
 });

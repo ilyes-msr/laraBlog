@@ -10,10 +10,16 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $with = ['category', 'author'];
+
 //    public function getRouteKeyName() {
 //        return 'slug';
 //    }
     public function category() : BelongsTo {
         return $this->belongsTo(Category::class);
+    }
+
+    public function author() : BelongsTo {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
