@@ -51,26 +51,32 @@ Route::get('/', function () {
 //        ->map(fn($document) => new Post($document->title, $document->excerpt, $document->date, $document->body(), $document->slug));
 
     return view('posts', [
-        'posts' => Post::with('category', 'author')->get()
+        'posts' => Post::with('category', 'author')->get(),
+        'categories' => Category::all()
     ]);
-});
+})->name('home');
 
 Route::get('posts/{post:slug}', function (Post $post) {
     return view('post', [
-        'post' => $post
+        'post' => $post,
+        'categories' => Category::all()
     ]);
 });
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
-        'posts' => $category->posts
+        'posts' => $category->posts,
+        'currentCategory' => $category,
+        'categories' => Category::all()
 //        'posts' => $category->posts->load(['category', 'author'])
     ]);
-});
+})->name('category');
 
 Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
-        'posts' => $author->posts
+        'posts' => $author->posts,
+        'categories' => Category::all()
+
 //        'posts' => $author->posts->load(['category', 'author'])
     ]);
 });

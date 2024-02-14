@@ -1,20 +1,9 @@
 <x-layout>
-    @forelse($posts as $post)
-        <article>
-            <h1>
-                <a href="/posts/{{$post->slug}}">
-                    {{$post->title}}
-                </a>
-            </h1>
 
-            By
-            <a href="/authors/{{$post->author->username}}">{{$post->author->name}}</a>
-            in
-            <a href="/categories/{{$post->category->slug}}"> {{$post->category->name}}</a>
+    @include('_posts-header')
 
-            <p><small> {{$post->excerpt}} </small></p>
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+        <x-posts-grid :posts="$posts"/>
+    </main>
 
-        </article>
-    @empty
-    @endforelse
 </x-layout>
