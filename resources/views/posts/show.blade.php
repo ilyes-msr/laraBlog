@@ -48,6 +48,15 @@
                         {!! $post->body !!}
                     </div>
                 </div>
+                <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                    @include ('posts._add-comment-form')
+
+                @forelse($post->comments as $comment)
+                        <x-post-comment :comment="$comment"/>
+                    @empty
+                        <p>No comments yet.</p>
+                    @endforelse
+                </section>
             </article>
         </main>
     </section>
