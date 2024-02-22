@@ -25,6 +25,9 @@ Route::post('/posts/{post:slug}/comments', [PostCommentsController::class, 'stor
 
 Route::post('/newsletter', NewsletterController::class);
 
+Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admin');
+Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');
+
 //Route::get('/ping', function () {
 //    $mailchimp = new \MailchimpMarketing\ApiClient();
 //
