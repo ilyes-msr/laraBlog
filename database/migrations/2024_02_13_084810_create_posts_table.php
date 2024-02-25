@@ -19,6 +19,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('category_id');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('slug')->unique();
+            $table->string('thumbnail')->nullable();
             $table->text('excerpt');
             $table->text('body');
             $table->timestamps();
